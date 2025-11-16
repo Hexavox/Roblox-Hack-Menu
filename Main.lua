@@ -1,8 +1,8 @@
+print("EXECUTED MY SCRIPT (main.lua)") -- Execution confirmation
+
 local TweenService = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
 local player = game.Players.LocalPlayer
-
-print("EXECUTED MY SCRIPT")
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "MainHUD"
@@ -48,7 +48,7 @@ local isExpanded = false
 local isAnimating = false
 local lastDotPosition = dot.Position
 
--- Define expand/shrink functions
+-- Expand/shrink menu animation
 local function expandMenu()
     if isAnimating or isExpanded then return end
     isAnimating = true
@@ -100,17 +100,12 @@ UIS.InputBegan:Connect(function(input, processed)
     end
 end)
 
--- Placeholder requires for modules (fly.lua, speed.lua, etc.)
-local flyModule = require(script.Parent:WaitForChild("fly"))
-local speedModule = require(script.Parent:WaitForChild("speed"))
-local autoModule = require(script.Parent:WaitForChild("auto"))
-
--- Initialize modules, passing the `menu` frame as parent
-flyModule.Init(menu)
-speedModule.Init(menu)
-autoModule.Init(menu)
-
-return {
-    expandMenu = expandMenu,
-    shrinkMenu = shrinkMenu
-}
+-- Load fly module with fallback
+local success, flyModule = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/Hexavox/Roblox-Hack-Menu/refs/heads/main/Fly.lua"))()
+end)
+if success then
+    flyModule.Init(menu)
+else
+    warn("Failed to load Fly module: " .. tostring(flyModule))
+end

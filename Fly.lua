@@ -1,4 +1,4 @@
--- fly.lua (Module)
+print("EXECUTED MY SCRIPT (fly.lua)") -- Execution confirmation
 
 local Fly = {}
 
@@ -8,13 +8,11 @@ local player = game.Players.LocalPlayer
 
 local flying = false
 local flyConns = {}
-local bv, bg
 
 function Fly.Init(parent)
-    -- Create module container UI
     local panel = Instance.new("Frame")
     panel.Size = UDim2.new(0.8, 0, 0.18, 0)
-    panel.Position = UDim2.new(0.1, 0, 0.1, 0) -- Adjust relative position inside parent
+    panel.Position = UDim2.new(0.1, 0, 0.1, 0)
     panel.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
     panel.BackgroundTransparency = 0.15
     panel.Parent = parent
@@ -32,7 +30,6 @@ function Fly.Init(parent)
     label.Position = UDim2.new(0.05, 0, 0, 0)
     label.Parent = panel
 
-    -- Switch UI
     local switch = Instance.new("Frame")
     switch.Size = UDim2.new(0, 44, 0, 24)
     switch.Position = UDim2.new(0.8, 0, 0.3, 0)
@@ -42,7 +39,7 @@ function Fly.Init(parent)
 
     local switchCorners = Instance.new("UICorner", switch)
     switchCorners.CornerRadius = UDim.new(1, 0)
-    
+
     local switchStroke = Instance.new("UIStroke", switch)
     switchStroke.Color = Color3.fromRGB(20, 20, 20)
     switchStroke.Thickness = 1
@@ -67,18 +64,17 @@ function Fly.Init(parent)
         end
     end
 
-    -- Fly system functions
     local function startFly()
         local char = player.Character or player.CharacterAdded:Wait()
         local root = char:WaitForChild("HumanoidRootPart")
         local hum = char:FindFirstChildWhichIsA("Humanoid")
         if not root or not hum then return end
 
-        bv = Instance.new("BodyVelocity", root)
+        local bv = Instance.new("BodyVelocity", root)
         bv.MaxForce = Vector3.new(1e5, 1e5, 1e5)
         bv.Velocity = Vector3.new(0, 0, 0)
 
-        bg = Instance.new("BodyGyro", root)
+        local bg = Instance.new("BodyGyro", root)
         bg.MaxTorque = Vector3.new(1e5, 1e5, 1e5)
         bg.CFrame = root.CFrame
 
@@ -145,7 +141,6 @@ function Fly.Init(parent)
         end
     end)
 
-    -- initial switch state
     setSwitch(false)
 end
 
