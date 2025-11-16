@@ -2,6 +2,8 @@ local TweenService = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
 local player = game.Players.LocalPlayer
 
+print("EXECUTED MY SCRIPT")
+
 local gui = Instance.new("ScreenGui")
 gui.Name = "MainHUD"
 gui.Parent = player:WaitForChild("PlayerGui")
